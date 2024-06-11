@@ -2,7 +2,7 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -19,7 +19,7 @@ func (api ApiHandler) RespondWithJson(w http.ResponseWriter, code int, payload i
 
 func (api ApiHandler) RespondWithError(w http.ResponseWriter, code int, msg string) {
 	if code > 499 {
-		fmt.Printf("Internal server error: %v\n", code)
+		log.Printf("Responding with 5XX error: %s", msg)
 	}
 
 	type response struct {
