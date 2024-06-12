@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (api ApiHandler) FeedsCreate(w http.ResponseWriter, r *http.Request) {
+func (api ApiHandler) HandlerFeedsCreate(w http.ResponseWriter, r *http.Request, user database.User) {
 	type parameters struct {
 		Name string `json:"name"`
 		Url  string `json:"url"`
@@ -23,18 +23,18 @@ func (api ApiHandler) FeedsCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := api.DbStore.CreateFeeds(r.Context(), database.CreateFeedsParams{
+	feed, err := api.DbStore.CreateFeed(r.Context(), database.CreateFeedParams{
 		ID:        uuid.New(),
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),
 		Name:      params.Name,
 		Url:       params.Url,
-		UserID:    "",
+		UserID:    user.ID,
 	})
 	if err != nil {
-		api.RespondWithError(w, http.StatusInternalServerError, "Couldn't create user")
+		api.RespondWithError(w, http.StatusInternalServerError, "Couldn't create feed")
 		return
 	}
 
-	api.RespondWithJson(w, http.StatusOK, api.DatabaseUserToUser(user))
+	api.RespondWithJson(w, http.StatusOK, feed)
 }

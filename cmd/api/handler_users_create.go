@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (api ApiHandler) UsersCreate(w http.ResponseWriter, r *http.Request) {
+func (api ApiHandler) HandlerUsersCreate(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
 		Name string `json:"name"`
 	}
