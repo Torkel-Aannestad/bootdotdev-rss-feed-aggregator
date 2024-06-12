@@ -23,6 +23,7 @@ func main() {
 	mux.HandleFunc("GET /v1/api/err", app.Api.HandlerError)
 
 	mux.HandleFunc("POST /v1/api/users", app.Api.UsersCreate)
+	mux.HandleFunc("GET /v1/api/users", app.Api.UsersRetrieveByAPIKey)
 
 	server := http.Server{
 		Addr:         fmt.Sprintf(":%v", os.Getenv("PORT")),
