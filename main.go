@@ -19,11 +19,14 @@ func main() {
 	app := app.NewApp()
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /v1/api/healthz", app.Api.HandlerHealthz)
-	mux.HandleFunc("GET /v1/api/err", app.Api.HandlerError)
-
 	mux.HandleFunc("POST /v1/api/users", app.Api.HandlerUsersCreate)
 	mux.HandleFunc("GET /v1/api/users", app.Api.MiddlewareAuth(app.Api.HandlerUsersRetrieve))
+
+	mux.HandleFunc("POST /v1/api/feeds", app.Api.MiddlewareAuth(app.Api.HandlerFeedsCreate))
+	mux.HandleFunc("GET /v1/api/feeds", app.Api.HandlerFeedsRetrieve)
+
+	mux.HandleFunc("GET /v1/api/healthz", app.Api.HandlerHealthz)
+	mux.HandleFunc("GET /v1/api/err", app.Api.HandlerError)
 
 	server := http.Server{
 		Addr:         fmt.Sprintf(":%v", os.Getenv("PORT")),

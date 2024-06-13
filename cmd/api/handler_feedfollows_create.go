@@ -9,10 +9,9 @@ import (
 	"github.com/google/uuid"
 )
 
-func (api ApiHandler) HandlerFeedsCreate(w http.ResponseWriter, r *http.Request, user database.User) {
+func (api ApiHandler) HandlerFeedfollowsCreate(w http.ResponseWriter, r *http.Request, user database.User) {
 	type parameters struct {
-		Name string `json:"name"`
-		Url  string `json:"url"`
+		Feed uuid.UUID `json:"feed"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -23,18 +22,18 @@ func (api ApiHandler) HandlerFeedsCreate(w http.ResponseWriter, r *http.Request,
 		return
 	}
 
-	feed, err := api.DbStore.CreateFeed(r.Context(), database.CreateFeedParams{
+	feedFollow, err := api.DbStore.CreateFeedFollows(r.Context(), database.CreateFeedFollowsParams{
+
 		ID:        uuid.New(),
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),
 		UserID:    user.ID,
-		Name:      params.Name,
-		Url:       params.Url,
+		FeedID:    params.Feed,
 	})
 	if err != nil {
 		api.RespondWithError(w, http.StatusInternalServerError, "Couldn't create feed")
 		return
 	}
 
-	api.RespondWithJson(w, http.StatusOK, feed)
+	api.RespondWithJson(w, http.StatusOK, feedFollow)
 }
