@@ -24,3 +24,56 @@ func DatabaseUserToUser(user database.User) User {
 		ApiKey:    user.ApiKey,
 	}
 }
+
+type Feed struct {
+	ID        uuid.UUID
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Name      string
+	Url       string
+	UserID    uuid.UUID
+}
+
+func DatabaseFeedToFeed(feed database.Feed) Feed {
+	return Feed{
+		ID:        feed.ID,
+		CreatedAt: feed.CreatedAt,
+		UpdatedAt: feed.UpdatedAt,
+		Name:      feed.Name,
+		Url:       feed.Url,
+		UserID:    feed.UserID,
+	}
+}
+func DatabaseFeedsToFeeds(feeds []database.Feed) []Feed {
+	feedsSlice := make([]Feed, len(feeds))
+	for i, feed := range feeds {
+		feedsSlice[i] = DatabaseFeedToFeed(feed)
+	}
+	return feedsSlice
+}
+
+type FeedFollow struct {
+	ID        uuid.UUID
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	UserID    uuid.UUID
+	FeedID    uuid.UUID
+}
+
+func DatabaseFeedFollowToFeedFollow(databaseFeedFollow database.FeedFollow) FeedFollow {
+	return FeedFollow{
+		ID:        databaseFeedFollow.ID,
+		CreatedAt: databaseFeedFollow.CreatedAt,
+		UpdatedAt: databaseFeedFollow.UpdatedAt,
+		UserID:    databaseFeedFollow.UserID,
+		FeedID:    databaseFeedFollow.FeedID,
+	}
+}
+
+func DatabaseFeedFollowsToFeedFollows(feedFollows []database.FeedFollow) []FeedFollow {
+	feedFollowsSlice := make([]FeedFollow, len(feedFollows))
+	for i, feedFollow := range feedFollows {
+		feedFollowsSlice[i] = DatabaseFeedFollowToFeedFollow(feedFollow)
+	}
+	return feedFollowsSlice
+}

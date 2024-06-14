@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Torkel-Aannestad/bootdotdev-rss-feed-aggregator/cmd/types"
 	"github.com/Torkel-Aannestad/bootdotdev-rss-feed-aggregator/internal/database"
 	"github.com/google/uuid"
 )
@@ -50,5 +51,5 @@ func (api ApiHandler) HandlerFeedsCreate(w http.ResponseWriter, r *http.Request,
 		return
 	}
 
-	api.RespondWithJson(w, http.StatusOK, feed)
+	api.RespondWithJson(w, http.StatusOK, types.DatabaseFeedToFeed(feed))
 }

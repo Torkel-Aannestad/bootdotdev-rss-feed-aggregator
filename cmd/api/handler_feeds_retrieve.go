@@ -2,6 +2,8 @@ package api
 
 import (
 	"net/http"
+
+	"github.com/Torkel-Aannestad/bootdotdev-rss-feed-aggregator/cmd/types"
 )
 
 func (api ApiHandler) HandlerFeedsRetrieve(w http.ResponseWriter, r *http.Request) {
@@ -12,5 +14,5 @@ func (api ApiHandler) HandlerFeedsRetrieve(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	api.RespondWithJson(w, http.StatusOK, feeds)
+	api.RespondWithJson(w, http.StatusOK, types.DatabaseFeedsToFeeds(feeds))
 }
