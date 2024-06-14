@@ -9,7 +9,7 @@ import (
 
 type authedHandler func(http.ResponseWriter, *http.Request, database.User)
 
-func (api ApiHandler) MiddlewareAuth(handler authedHandler) http.HandlerFunc {
+func (api ApiHandler) MiddlewareAuth(next authedHandler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		apiKey, err := auth.GetAPIKey(r.Header)
 		if err != nil {
@@ -23,6 +23,6 @@ func (api ApiHandler) MiddlewareAuth(handler authedHandler) http.HandlerFunc {
 			return
 		}
 
-		handler(w, r, user)
+		next(w, r, user)
 	}
 }

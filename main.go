@@ -27,6 +27,7 @@ func main() {
 
 	mux.HandleFunc("POST /v1/api/feed_follows", app.Api.MiddlewareAuth(app.Api.HandlerFeedfollowsCreate))
 	mux.HandleFunc("GET /v1/api/feed_follows", app.Api.MiddlewareAuth(app.Api.HandlerFeedfollowsRetrieve))
+	mux.HandleFunc("DELETE /v1/api/feed_follows", app.Api.MiddlewareAuth(app.Api.HandlerFeedfollowsDelete))
 
 	mux.HandleFunc("GET /v1/api/healthz", app.Api.HandlerHealthz)
 	mux.HandleFunc("GET /v1/api/err", app.Api.HandlerError)
