@@ -9,5 +9,4 @@ WHERE user_id = $1;
 
 -- name: DeleteFeedFollows :exec
 DELETE FROM feed_follows
-WHERE id = $1
-RETURNING *;
+WHERE id = $1;

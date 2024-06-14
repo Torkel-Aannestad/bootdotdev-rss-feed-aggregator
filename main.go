@@ -38,5 +38,6 @@ func main() {
 		ReadTimeout:  time.Second * 30,
 		WriteTimeout: time.Second * 30,
 	}
+	fmt.Println("Server starting on port", server.Addr)
 	log.Fatal(server.ListenAndServe())
 }

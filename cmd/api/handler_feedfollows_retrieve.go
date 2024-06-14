@@ -8,10 +8,10 @@ import (
 
 func (api ApiHandler) HandlerFeedfollowsRetrieve(w http.ResponseWriter, r *http.Request, user database.User) {
 
-	feedFollow, err := api.DbStore.ListFeedFollows(r.Context(), user.ID)
+	feedFollows, err := api.DbStore.ListFeedFollows(r.Context(), user.ID)
 	if err != nil {
 		api.RespondWithError(w, http.StatusInternalServerError, "Couldn't retrieve feeds")
 		return
 	}
-	api.RespondWithJson(w, http.StatusOK, feedFollow)
+	api.RespondWithJson(w, http.StatusOK, feedFollows)
 }

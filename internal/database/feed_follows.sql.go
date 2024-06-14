@@ -48,7 +48,6 @@ func (q *Queries) CreateFeedFollows(ctx context.Context, arg CreateFeedFollowsPa
 const deleteFeedFollows = `-- name: DeleteFeedFollows :exec
 DELETE FROM feed_follows
 WHERE id = $1
-RETURNING id, created_at, updated_at, user_id, feed_id
 `
 
 func (q *Queries) DeleteFeedFollows(ctx context.Context, id uuid.UUID) error {

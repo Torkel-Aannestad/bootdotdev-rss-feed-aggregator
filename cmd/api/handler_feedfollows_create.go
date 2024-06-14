@@ -23,7 +23,6 @@ func (api ApiHandler) HandlerFeedfollowsCreate(w http.ResponseWriter, r *http.Re
 	}
 
 	feedFollow, err := api.DbStore.CreateFeedFollows(r.Context(), database.CreateFeedFollowsParams{
-
 		ID:        uuid.New(),
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),

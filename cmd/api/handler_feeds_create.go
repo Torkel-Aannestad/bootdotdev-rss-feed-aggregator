@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 
@@ -33,6 +34,19 @@ func (api ApiHandler) HandlerFeedsCreate(w http.ResponseWriter, r *http.Request,
 	})
 	if err != nil {
 		api.RespondWithError(w, http.StatusInternalServerError, "Couldn't create feed")
+		return
+	}
+
+	_, err = api.DbStore.CreateFeedFollows(r.Context(), database.CreateFeedFollowsParams{
+		ID:        uuid.New(),
+		CreatedAt: time.Now().UTC(),
+		UpdatedAt: time.Now().UTC(),
+		UserID:    user.ID,
+		FeedID:    feed.ID,
+	})
+	if err != nil {
+		api.RespondWithError(w, http.StatusInternalServerError, "Couldn't create feed")
+		log.Println(err)
 		return
 	}
 
